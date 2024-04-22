@@ -20,7 +20,7 @@ if len(audio) > 0:
     st.audio(audio.export().read())  
 
     # To save audio to a file, use pydub export method:
-    audio.export("audio.wav", format="wav")
+    #audio.export("audio.wav", format="wav")
 
     def generate():
         vertexai.init(project="streamlit-420019", location="us-central1")
