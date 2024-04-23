@@ -1,8 +1,8 @@
 import streamlit as st
-from google.cloud import aiplatform_v1 as gapiclient
+from google.cloud import aiplatform.v1beta1 as gapiclient
 
 # Replace with your Gemini API key
-API_KEY = "AIzaSyBcbUSkMPUYpdu9f8QdH46voXl0z84TQCY"
+API_KEY = "NOT REQUIRED ANYMORE AS TAKEN FROM USER INPUT"
 
 # Function to generate response using Gemini
 def generate_response(prompt, context, user_input_google_project, user_input_google_project_api_key):
