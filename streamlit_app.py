@@ -1,29 +1,48 @@
 import streamlit as st
-from openai import OpenAI
+from google.cloud importaiplatformv1beta1 as gapiclient
 
-with st.sidebar:
-    openai_api_key = st.text_input("Open Api Key", key="chatbot_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
-    "[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/llm-examples?quickstart=1)"
+# Replace with your Gemini API key
+API_KEY = "AIzaSyBcbUSkMPUYpdu9f8QdH46voXl0z84TQCY"
 
-st.title("💬 Chatbot")
+# Function to generate response using Gemini
+def generate_response(prompt, context):
+  """Sends user prompt and context to Gemini for response generation."""
+  endpoint = gapiclient.Endpoint.create(location="us-central1")
+  project = "projects/YOUR_PROJECT_ID"  # Replace with your project ID
+  location = endpoint.location
+  locations = gapiclient.ListLocationsRequest(parent="projects/YOUR_PROJECT_ID")  # Replace with your project ID
+  for location in gapiclient.LocationServiceClient().ListLocations(locations).locations:
+    if location.name == location:
+      break
 
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+  service = gapiclient.TextGenerationServiceClient(client_options={"api_key": API_KEY})
+  request = gapiclient.GenerateTextRequest(
+      parent=f"{project}/locations/{location}",
+      text_input=gapiclient.TextInput(text=prompt, previous_chat_messages=context),
+  )
+  response = service.generate_text(request=request)
+  return response.generated_text[0].text
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+# Initialize chat history
+chat_history = []
 
-if prompt := st.chat_input():
-    if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
+st.title("Streamlit Chatbot with Gemini")
 
-    client = OpenAI(api_key=openai_api_key)
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
-    response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-    msg = response.choices[0].message.content
-    st.session_state.messages.append({"role": "assistant", "content": msg})
-    st.chat_message("assistant").write(msg)
+# Input field for user prompt
+user_input = st.text_input("You: ")
+
+# Send prompt to Gemini and get response
+if user_input:
+  # Add user input to chat history
+  chat_history.append({"speaker": "User", "text": user_input})
+
+  # Generate response using Gemini
+  response = generate_response(user_input, chat_history)
+
+  # Add Gemini response to chat history
+  chat_history.append({"speaker": "Gemini", "text": response})
+
+  # Display chat history
+  for message in chat_history:
+    st.write(f"{message['speaker']}: {message['text']}")
+
