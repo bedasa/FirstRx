@@ -75,4 +75,5 @@ tzdata==2024.1
 uritemplate==4.1.1
 urllib3==2.2.1
 vertexai==1.48.0
+openai==1.23.2
 streamlit-option-menu
