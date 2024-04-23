@@ -7,7 +7,7 @@ API_KEY = "NOT REQUIRED ANYMORE AS TAKEN FROM USER INPUT"
 # Function to generate response using Gemini
 def generate_response(prompt, context, user_input_google_project, user_input_google_project_api_key):
   """Sends user prompt and context to Gemini for response generation."""
-  endpoint = gapiclient.Endpoint.create(location="us-central1")
+  endpoint = gapiclient.Endpoint(location="us-central1")
   project = "projects/"+user_input_google_project  # Replace with your project ID
   location = endpoint.location
   locations = gapiclient.ListLocationsRequest(parent="projects/"+user_input_google_project)  # Replace with your project ID
