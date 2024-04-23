@@ -15,7 +15,7 @@ def LLM_Response(question):
     response = chat.send_message(question,stream=True)
     return response
 
-st.title("Chat Application Developed by Team Agranika using Gemini Pro")
+st.title("First RxChat ..... Developed by Team Agranika using Gemini Pro")
 
 
 user_quest = st.text_input("Ask a question:")
