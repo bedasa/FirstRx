@@ -1,5 +1,5 @@
 import streamlit as st
-from google.cloud import aiplatformv1beta1 as gapiclient
+from google.cloud import aiplatform as gapiclient
 
 # Replace with your Gemini API key
 API_KEY = "AIzaSyBcbUSkMPUYpdu9f8QdH46voXl0z84TQCY"
