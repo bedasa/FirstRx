@@ -10,7 +10,7 @@ def generate_response(prompt, context, user_input_google_project, user_input_goo
   endpoint = gapiclient.Endpoint.create(location="us-central1")
   project = "projects/"+user_input_google_project  # Replace with your project ID
   location = endpoint.location
-  locations = gapiclient.ListLocationsRequest(parent="projects/"+user_input_google_project)  # Replace with your project ID
+  locations = gapiclient.ListLocationsRequest(parent="".join(["projects/", user_input_google_project]))  # Replace with your project ID
   for location in gapiclient.LocationServiceClient().ListLocations(locations).locations:
     if location.name == location:
       break
