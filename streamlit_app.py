@@ -4,9 +4,9 @@ import google.generativeai as ggi
 
 
 # Input google API key
-user_input_google_project_api_key= st.text_input("Input Google Project API Key: ")
+# user_input_google_project_api_key= st.text_input("Input Google Project API Key: ")
 
-ggi.configure(api_key = user_input_google_project_api_key)
+ggi.configure(api_key = st.secrets["gapi_key"])
 
 model = ggi.GenerativeModel("gemini-pro") 
 chat = model.start_chat()
